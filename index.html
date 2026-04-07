@@ -1,0 +1,1476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EduNexus — School Management System</title>
+  <meta name="description" content="EduNexus — A modern, all-in-one School Management System for administrators, teachers, students and parents." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..800;1,6..72,400..800&family=Plus+Jakarta+Sans:ital,wght@0,400..800;1,400..800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css?v=2" />
+
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+  <!-- ═══════════════════════════ DIGITAL CURATOR: PREMIUM LOGIN ═══════════════════════════ -->
+  <div id="login-page" class="login-page">
+    <div class="login-card">
+      <header class="login-header">
+        <div class="login-brand">
+          <div class="logo-icon-premium">
+            <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="60" height="60" rx="16" fill="url(#elite-grad)"/>
+              <path d="M14 42V24L30 14L46 24V42" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M22 30H38" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+              <path d="M30 30V48" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+              <defs>
+                <linearGradient id="elite-grad" x1="0" y1="0" x2="60" y2="60" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#00113a"/>
+                  <stop offset="1" stop-color="#7b5800"/>
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+          <h1 id="login-brand-text">EduNexus</h1>
+          <span class="login-tagline" id="login-tagline-text">Institutional Excellence</span>
+        </div>
+      </header>
+
+      <form id="login-form" class="login-form" novalidate>
+        <div class="form-group">
+          <label for="login-role">Select Role</label>
+          <div class="input-premium-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+            <select id="login-role" name="role" required>
+              <option value="">Choose your perspective...</option>
+              <option value="admin">Administrator</option>
+              <option value="teacher">Teacher</option>
+              <option value="librarian">Librarian</option>
+              <option value="student">Student</option>
+              <option value="parent">Parent</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="login-email">Identity ID / Email</label>
+          <div class="input-premium-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+            <input type="email" id="login-email" name="email" placeholder="identity@edunexus.edu" required />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="login-password">Access Key</label>
+          <div class="input-premium-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+            <input type="password" id="login-password" name="password" placeholder="••••••••" required />
+          </div>
+        </div>
+
+        <div id="login-error" class="login-error hidden">Access denied. Verify credentials.</div>
+
+        <button type="submit" class="btn-elite-glow" id="login-btn">
+          <span class="btn-text">Establish Connection</span>
+          <div class="btn-spinner hidden"></div>
+        </button>
+
+        <div class="login-footer">
+          <a href="#">Forgot Access Key?</a>
+        </div>
+      </form>
+
+      <section class="demo-access">
+        <p class="demo-access-label">Institutional Demo Access</p>
+        <div class="demo-chips">
+          <button class="demo-chip" onclick="fillDemo('admin')">Admin</button>
+          <button class="demo-chip" onclick="fillDemo('teacher')">Teacher</button>
+          <button class="demo-chip" onclick="fillDemo('librarian')">Librarian</button>
+          <button class="demo-chip" onclick="fillDemo('student')">Student</button>
+          <button class="demo-chip" onclick="fillDemo('parent')">Parent</button>
+        </div>
+      </section>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════ APP SHELL ═══════════════════════════ -->
+  <div id="app" class="app hidden">
+
+    <!-- SIDEBAR -->
+    <aside id="sidebar" class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <div class="logo-icon small">
+            <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="40" height="40" rx="10" fill="#7b5800"/>
+              <path d="M12 28V14l8-6 8 6v14" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <rect x="17" y="19" width="6" height="9" rx="1" stroke="#fff" stroke-width="2" fill="none"/>
+            </svg>
+          </div>
+          <span class="sidebar-brand">ArtihC Group</span>
+        </div>
+        <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle sidebar" onclick="toggleSidebar()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <nav class="sidebar-nav" id="sidebar-nav">
+        <div class="nav-section-label">Main</div>
+        <a href="#" class="nav-item active" data-section="dashboard" onclick="navigate('dashboard', this)">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+          <span class="nav-label">Dashboard</span>
+        </a>
+        <a href="#" class="nav-item" data-section="students" onclick="navigate('students', this)" data-roles="admin,teacher">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+          <span class="nav-label">Students</span>
+        </a>
+        <a href="#" class="nav-item" data-section="teachers" onclick="navigate('teachers', this)" data-roles="admin">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+          <span class="nav-label">Teachers</span>
+        </a>
+
+        <div class="nav-section-label">Academics</div>
+        <a href="#" class="nav-item" data-section="attendance" onclick="navigate('attendance', this)">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+          <span class="nav-label">Attendance</span>
+        </a>
+        <a href="#" class="nav-item" data-section="marks" onclick="navigate('marks', this)">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+          <span class="nav-label">Marks & Grades</span>
+        </a>
+        <a href="#" class="nav-item" data-section="timetable" onclick="navigate('timetable', this)">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+          <span class="nav-label">Timetable</span>
+        </a>
+        <a href="#" class="nav-item" data-section="reportcards" onclick="navigate('reportcards', this)" data-roles="admin,teacher,student,parent">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+          <span class="nav-label">Report Cards</span>
+        </a>
+        <a href="#" class="nav-item" data-section="library" onclick="navigate('library', this)" data-roles="admin,teacher,student,librarian">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+          <span class="nav-label">Library</span>
+        </a>
+
+        <div class="nav-section-label">Administration</div>
+        <a href="#" class="nav-item" data-section="admissions" onclick="navigate('admissions', this)" data-roles="admin">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
+          <span class="nav-label">Admissions</span>
+        </a>
+        <a href="#" class="nav-item" data-section="fees" onclick="navigate('fees', this)" data-roles="admin,parent">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+          <span class="nav-label">Fee Management</span>
+        </a>
+        <a href="#" class="nav-item" data-section="notifications" onclick="navigate('notifications', this)">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+          <span class="nav-label">Notifications</span>
+          <span class="nav-badge" id="nav-notif-count">3</span>
+        </a>
+        <a href="#" class="nav-item" data-section="settings" onclick="navigate('settings', this)" data-roles="admin">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+          <span class="nav-label">School Settings</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="user-profile" onclick="navigate('settings')">
+          <div class="user-avatar" id="sidebar-avatar">A</div>
+          <div class="user-info">
+            <span id="sidebar-name" class="user-name">Guest Admin</span>
+            <span id="sidebar-role" class="user-role">Administrator</span>
+          </div>
+        </div>
+        <div id="linked-students-summary" class="linked-students-container hidden">
+          <!-- Populated by JS for Parents -->
+        </div>
+        <div class="sidebar-actions">
+          <button class="btn-logout" onclick="openChangePassword()" title="Security Settings">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+          </button>
+          <button class="btn-logout" onclick="logout()" title="Secure Logout">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-wrap" id="main-wrap">
+
+      <!-- TOP NAVBAR -->
+      <header class="topbar" id="topbar">
+        <div class="topbar-left">
+          <button class="topbar-menu-btn" onclick="toggleSidebar()" aria-label="Menu">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          </button>
+          <div class="breadcrumb">
+            <span id="page-title">Dashboard</span>
+          </div>
+        </div>
+        <div class="topbar-right">
+          <div class="search-box">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" id="global-search" placeholder="Quick search…" oninput="globalSearch(this.value)" />
+          </div>
+          <div class="notif-bell" id="notif-bell" onclick="toggleNotifDropdown()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+            <span class="notif-count" id="notif-count">3</span>
+            <!-- Dropdown -->
+            <div class="notif-dropdown glass-card" id="notif-dropdown">
+              <div class="notif-header">
+                <h4>Notifications</h4>
+                <button onclick="markAllRead(); event.stopPropagation();">Mark all read</button>
+              </div>
+              <div id="notif-list" class="notif-list"></div>
+            </div>
+          </div>
+          <div class="topbar-avatar" id="topbar-avatar">A</div>
+        </div>
+      </header>
+
+      <!-- CONTENT AREA -->
+      <main class="content" id="content">
+
+        <!-- ─────────── DASHBOARD ─────────── -->
+        <section id="section-dashboard" class="section active">
+          <div class="section-header">
+            <div>
+              <h2>Dashboard Overview</h2>
+              <p class="section-sub" id="welcome-msg">Welcome back!</p>
+            </div>
+            <div class="section-actions">
+              <span class="date-badge" id="current-date"></span>
+            </div>
+          </div>
+
+          <div class="stats-grid" id="stats-grid">
+            <!-- injected by JS -->
+          </div>
+
+          <div class="charts-grid">
+            <div class="chart-card glass-card">
+              <div class="chart-card-header">
+                <h3>Monthly Attendance</h3>
+                <span class="chart-badge">Last 6 months</span>
+              </div>
+              <canvas id="chart-attendance" height="220"></canvas>
+            </div>
+            <div class="chart-card glass-card">
+              <div class="chart-card-header">
+                <h3>Fee Collection</h3>
+                <span class="chart-badge">This year</span>
+              </div>
+              <canvas id="chart-fees" height="220"></canvas>
+            </div>
+            <div class="chart-card glass-card">
+              <div class="chart-card-header">
+                <h3>Grade Distribution</h3>
+                <span class="chart-badge">Current term</span>
+              </div>
+              <canvas id="chart-grades" height="220"></canvas>
+            </div>
+          </div>
+
+          <div class="activity-row">
+            <div class="activity-card glass-card">
+              <div class="chart-card-header">
+                <h3>Recent Activity</h3>
+                <a href="#" class="view-all" onclick="navigate('students', document.querySelector('[data-section=students]'))">View all</a>
+              </div>
+              <ul class="activity-list" id="activity-list"></ul>
+            </div>
+            <div class="top-students glass-card">
+              <div class="chart-card-header">
+                <h3>Top Performers</h3>
+              </div>
+              <ul class="top-list" id="top-performers"></ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ─────────── STUDENTS ─────────── -->
+        <section id="section-students" class="section">
+          <div class="section-header">
+            <div>
+              <h2>Student Management</h2>
+              <p class="section-sub">Manage all enrolled students</p>
+            </div>
+            <div class="section-actions">
+              <div class="search-filter">
+                <input type="text" id="student-search" placeholder="Search students…" oninput="filterStudents()" />
+                <select id="student-class-filter" onchange="filterStudents()">
+                  <option value="">All Classes</option>
+                  <option value="9">Class 9</option>
+                  <option value="10">Class 10</option>
+                  <option value="11">Class 11</option>
+                  <option value="12">Class 12</option>
+                </select>
+              </div>
+              <button class="btn-primary" onclick="openStudentModal()" id="btn-add-student">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="17" y1="11" x2="23" y2="11"></line></svg>
+                <span>Add Student</span>
+              </button>
+            </div>
+          </div>
+          <div class="students-grid" id="students-grid"></div>
+        </section>
+
+        <!-- ─────────── TEACHERS ─────────── -->
+        <section id="section-teachers" class="section">
+          <div class="section-header">
+            <div>
+              <h2>Teacher Management</h2>
+              <p class="section-sub">Manage faculty members and subject assignments</p>
+            </div>
+            <div class="section-actions">
+              <input type="text" id="teacher-search" placeholder="Search teachers…" oninput="filterTeachers()" />
+              <button class="btn-primary" onclick="openTeacherModal()" id="btn-add-teacher">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                <span>Add Teacher</span>
+              </button>
+            </div>
+          </div>
+          <div class="teachers-grid" id="teachers-grid"></div>
+        </section>
+
+        <!-- ─────────── ATTENDANCE ─────────── -->
+        <section id="section-attendance" class="section">
+          <div class="section-header">
+            <div>
+              <h2>Monthly Attendance Grid</h2>
+              <p class="section-sub">Mark and track attendance for the entire month</p>
+            </div>
+            <div class="section-actions">
+              <button class="btn-secondary" onclick="exportAttendanceCSV()" style="padding: 0.5rem 1rem">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;margin-right:8px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                Export CSV
+              </button>
+              <button class="btn-secondary" onclick="markTodayPresent()" style="padding: 0.5rem 1rem">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;margin-right:8px"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                Today All Present
+              </button>
+              <select id="attendance-month" onchange="renderAttendanceGrid()">
+                <option value="0">January</option><option value="1">February</option>
+                <option value="2">March</option><option value="3">April</option>
+                <option value="4">May</option><option value="5">June</option>
+                <option value="6">July</option><option value="7">August</option>
+                <option value="8">September</option><option value="9">October</option>
+                <option value="10">November</option><option value="11">December</option>
+              </select>
+              <select id="attendance-year" onchange="renderAttendanceGrid()">
+                <option value="2026">2026</option>
+                <option value="2025">2025</option>
+              </select>
+              <select id="attendance-class" onchange="renderAttendanceGrid()">
+                <option value="9">Class 9</option>
+                <option value="10">Class 10</option>
+                <option value="11">Class 11</option>
+                <option value="12">Class 12</option>
+              </select>
+              <button class="btn-primary" onclick="saveAttendanceGrid()" id="btn-save-attendance">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;margin-right:8px"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+                Save Changes
+              </button>
+            </div>
+          </div>
+
+          <div class="attendance-layout">
+            <!-- Analytics Cards -->
+            <div class="stats-grid" id="attendance-stats" style="margin-bottom: 1.5rem">
+              <div class="stat-card glass-card" style="border-left: 4px solid var(--primary)">
+                <div class="stat-info">
+                  <h4>Total Students</h4>
+                  <div class="value" id="att-stat-total">0</div>
+                </div>
+              </div>
+              <div class="stat-card glass-card" style="border-left: 4px solid var(--success)">
+                <div class="stat-info">
+                  <h4>Average Monthly Presence</h4>
+                  <div class="value" id="att-stat-avg">0%</div>
+                </div>
+              </div>
+              <div class="stat-card glass-card" style="border-left: 4px solid var(--warning)">
+                <div class="stat-info">
+                  <h4>Lowest Attendance</h4>
+                  <div class="value" id="att-stat-low" style="font-size: 1rem; color: var(--danger)">No Data</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="attendance-grid-container glass-card">
+              <table class="attendance-grid" id="attendance-grid">
+                <!-- Injected by JS -->
+              </table>
+            </div>
+            
+            <div class="attendance-legend glass-card" style="padding: 1rem; display: flex; gap: 1.5rem; font-size: 0.8rem; font-weight: 600;">
+              <div style="display:flex; align-items:center; gap:8px"><div style="width:12px; height:12px; background:#dcfce7; border-radius:3px"></div> Present (P)</div>
+              <div style="display:flex; align-items:center; gap:8px"><div style="width:12px; height:12px; background:#fee2e2; border-radius:3px"></div> Absent (A)</div>
+              <div style="display:flex; align-items:center; gap:8px"><div style="width:12px; height:12px; background:#f1f5f9; border-radius:3px"></div> Holiday (H)</div>
+              <div style="display:flex; align-items:center; gap:8px"><div style="width:12px; height:12px; background:#f8fafc; border-radius:3px; border:1px solid #e2e8f0;"></div> Not Marked</div>
+              <div style="margin-left: auto; color: var(--text-muted); font-weight: normal;">* Left of names shows student ID if attendance is low (<75%)</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ─────────── MARKS ─────────── -->
+        <section id="section-marks" class="section">
+          <div class="section-header">
+            <div>
+              <h2>Marks &amp; Grades</h2>
+              <p class="section-sub">Enter and view student results</p>
+            </div>
+            <div class="section-actions">
+              <select id="marks-class" onchange="loadMarks()">
+                <option value="9">Class 9</option>
+                <option value="10">Class 10</option>
+                <option value="11">Class 11</option>
+                <option value="12">Class 12</option>
+              </select>
+              <select id="marks-exam" onchange="loadMarks()">
+                <option value="Mid-Term">Mid-Term</option>
+                <option value="Final Exam">Final Exam</option>
+                <option value="Unit 1">Unit Test 1</option>
+                <option value="Unit 2">Unit Test 2</option>
+              </select>
+              <button class="btn-primary hidden" id="btn-save-marks" onclick="saveMarksFromUI()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:16px;margin-right:8px"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+                Save Results
+              </button>
+            </div>
+          </div>
+          <div class="glass-card marks-card">
+            <div class="marks-table-wrap">
+              <table class="data-table marks-table" id="marks-table">
+                <thead id="marks-thead"></thead>
+                <tbody id="marks-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ─────────── TIMETABLE ─────────── -->
+        <section id="section-timetable" class="section">
+          <div class="section-header">
+            <div>
+              <h2>Weekly Timetable</h2>
+              <p class="section-sub">Class schedule overview</p>
+            </div>
+            <div class="section-actions">
+              <button id="btn-edit-timetable" class="btn-primary-outline" onclick="toggleTimetableEdit()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                Edit Schedule
+              </button>
+              <button id="btn-manage-subjects" class="btn-primary-outline hidden" onclick="openModal('modal-manage-subjects'); renderSubjectManager();">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                Subjects
+              </button>
+              <button id="btn-save-timetable" class="btn-primary hidden" onclick="saveTimetable()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+                Save
+              </button>
+              <select id="timetable-class" onchange="renderTimetable()">
+                <option value="9">Class 9</option>
+                <option value="10">Class 10</option>
+                <option value="11">Class 11</option>
+                <option value="12">Class 12</option>
+              </select>
+            </div>
+          </div>
+          <div class="glass-card timetable-card">
+            <div class="timetable-legend" id="timetable-legend"></div>
+            <div class="timetable-wrap">
+              <table class="timetable-grid" id="timetable-grid"></table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ─────────── ADMISSIONS ─────────── -->
+        <section id="section-admissions" class="section">
+          <div class="section-header">
+            <div>
+              <h2>Admissions Enquiries</h2>
+              <p class="section-sub">Manage prospective student leads from the landing page</p>
+            </div>
+          </div>
+          <div class="glass-card table-container">
+            <table id="enquiries-table">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Student & Gender</th>
+                  <th>Contact Info</th>
+                  <th style="text-align:center">Academic Score</th>
+                  <th>Prev. School & Talent</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="enquiries-list">
+                <!-- Populated by JS -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- ─────────── FEE MANAGEMENT ─────────── -->
+        <section id="section-fees" class="section">
+          <div class="section-header">
+            <div>
+              <h2>Fee Management</h2>
+              <p class="section-sub">Track payments and outstanding dues</p>
+            </div>
+            <div class="section-actions">
+              <select id="fees-class" onchange="loadFees()">
+                <option value="">All Classes</option>
+                <option value="9">Class 9</option>
+                <option value="10">Class 10</option>
+                <option value="11">Class 11</option>
+                <option value="12">Class 12</option>
+              </select>
+              <select id="fees-status" onchange="loadFees()">
+                <option value="">All Status</option>
+                <option value="paid">Paid</option>
+                <option value="pending">Pending</option>
+                <option value="partial">Partial</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="fees-summary-row" id="fees-summary-row"></div>
+
+          <div class="glass-card">
+            <table class="data-table" id="fees-table">
+              <thead>
+                <tr>
+                  <th>Student</th>
+                  <th>Class</th>
+                  <th>Total Fee</th>
+                  <th>Paid</th>
+                  <th>Balance</th>
+                  <th>Status</th>
+                  <th>Due Date</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="fees-tbody"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- ─────────── NOTIFICATIONS ─────────── -->
+        <section id="section-notifications" class="section">
+          <div class="section-header">
+            <div>
+              <h2>Notifications &amp; Announcements</h2>
+              <p class="section-sub">School-wide and personal notifications</p>
+            </div>
+            <div class="section-actions">
+              <button class="btn-primary" onclick="openAnnouncementModal()" id="btn-add-announcement">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                New Announcement
+              </button>
+            </div>
+          </div>
+          <div class="notif-layout">
+            <div class="notif-panel glass-card" id="notif-panel"></div>
+            <div class="notif-stats glass-card">
+              <h3>Quick Stats</h3>
+              <div id="notif-quick-stats"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ─────────── SCHOOL SETTINGS ─────────── -->
+        <section id="section-settings" class="section">
+          <div class="section-header">
+            <div>
+              <h2>School Settings</h2>
+              <p class="section-sub">Manage branding, identity, and your public-facing landing page.</p>
+            </div>
+            <div class="section-actions">
+              <a href="landing.html" target="_blank" class="btn-secondary" style="display:inline-flex;align-items:center;gap:6px;padding:0.6rem 1.25rem;font-size:0.85rem">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:15px;height:15px"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                Preview Site
+              </a>
+            </div>
+          </div>
+
+          <!-- TABS -->
+          <div class="settings-tabs">
+            <button class="settings-tab-btn active" data-stab="branding" onclick="switchSettingsTab('branding')">
+              🏫 School Branding
+            </button>
+            <button class="settings-tab-btn" data-stab="landing" onclick="switchSettingsTab('landing')">
+              🌐 Landing Page Editor
+            </button>
+            <button class="settings-tab-btn" data-stab="data" onclick="switchSettingsTab('data')">
+              💾 Data & Backup
+            </button>
+          </div>
+
+          <!-- TAB: BRANDING -->
+          <div id="stab-branding" class="settings-tab-content">
+            <div class="settings-grid" style="display:grid;grid-template-columns:1.5fr 1fr;gap:2rem">
+              <div class="settings-card glass-card" style="padding:2rem">
+                <h3 style="margin-bottom:1.5rem;font-family:var(--font-serif)">Institutional Details</h3>
+                <form id="form-school-settings" class="settings-form" oninput="updateSettingsPreview()">
+                  <div class="form-grid">
+                    <div class="form-group form-full" style="grid-column:span 2">
+                      <label>School Name</label>
+                      <input type="text" id="sch-name" placeholder="e.g. EduNexus Global Academy">
+                    </div>
+                    <div class="form-group form-full" style="grid-column:span 2">
+                      <label>Slogan / Tagline</label>
+                      <input type="text" id="sch-tagline" placeholder="e.g. Inspiring Excellence, Nurturing Future">
+                    </div>
+                    <div class="form-group">
+                      <label>Contact Number</label>
+                      <input type="text" id="sch-contact" placeholder="+91 98765 43210">
+                    </div>
+                    <div class="form-group">
+                      <label>Email Address</label>
+                      <input type="email" id="sch-email" placeholder="admin@school.edu">
+                    </div>
+                    <div class="form-group form-full" style="grid-column:span 2">
+                      <label>Campus Address</label>
+                      <textarea id="sch-address" rows="3" placeholder="Full street address..." style="width:100%;padding:0.65rem 1rem;border-radius:8px;border:1px solid #e2e8f0;font-family:sans-serif;"></textarea>
+                    </div>
+                  </div>
+                  <button type="button" class="btn-primary" style="margin-top:1.5rem" onclick="saveSchoolSettings()">Save Branding</button>
+                </form>
+              </div>
+              <div class="settings-card glass-card" style="padding:2rem;display:flex;flex-direction:column;gap:1.5rem">
+                <h3 style="font-family:var(--font-serif)">Identity Preview</h3>
+                <div id="branding-preview" style="padding:3rem 2rem;background:#fdfbf7;border:1px dashed var(--border-light);border-radius:16px;text-align:center;flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center">
+                  <div class="logo-icon" style="margin-bottom:1.5rem">
+                    <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:64px;height:64px">
+                      <rect width="40" height="40" rx="12" fill="url(#lg_settings)"/>
+                      <path d="M8 28V16l12-8 12 8v12" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      <rect x="15" y="20" width="10" height="8" rx="1" stroke="#fff" stroke-width="2" fill="none"/>
+                      <defs><linearGradient id="lg_settings" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse"><stop stop-color="#1e293b"/><stop offset="1" stop-color="#b45309"/></linearGradient></defs>
+                    </svg>
+                  </div>
+                  <h2 id="prev-name" style="font-family:var(--font-serif);color:var(--primary);font-size:1.75rem;margin-bottom:0.5rem">EduNexus School</h2>
+                  <p id="prev-tagline" style="font-size:0.9rem;color:var(--text-muted);font-style:italic">Inspiring Excellence, Nurturing Future</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB: LANDING PAGE EDITOR (BUILDER) -->
+          <div id="stab-landing" class="settings-tab-content hidden">
+            <div class="builder-layout">
+              
+              <!-- Left: Editor Sidebar -->
+              <div class="builder-sidebar">
+                <div class="builder-sidebar-header">
+                  <div style="display:flex; justify-content:space-between; align-items:center">
+                    <h3 style="font-family:var(--font-serif); margin:0; font-size:1.1rem">Configurator</h3>
+                    <div style="font-size:0.65rem; background:var(--primary-light); color:var(--primary); padding:2px 8px; border-radius:10px; font-weight:800">LIVE SYNC</div>
+                  </div>
+                </div>
+                
+                <div class="builder-sidebar-content" id="landing-builder-form" oninput="syncLandingPreview()">
+                  
+                  <!-- Theme Section -->
+                  <div class="builder-group">
+                    <div class="builder-group-title"><span>🎨</span> Branding & Theme</div>
+                    <div class="theme-mini-grid" id="theme-picker">
+                      <div class="theme-item active" data-theme="academic" onclick="selectLandingTheme('academic')">
+                        <div class="theme-swatch" style="background:linear-gradient(135deg,#1e3a8a,#f97316)"></div>
+                        <span>Academic</span>
+                      </div>
+                      <div class="theme-item" data-theme="emerald" onclick="selectLandingTheme('emerald')">
+                        <div class="theme-swatch" style="background:linear-gradient(135deg,#064e3b,#d97706)"></div>
+                        <span>Emerald</span>
+                      </div>
+                      <div class="theme-item" data-theme="royal" onclick="selectLandingTheme('royal')">
+                        <div class="theme-swatch" style="background:linear-gradient(135deg,#3b0764,#a78bfa)"></div>
+                        <span>Royal</span>
+                      </div>
+                      <div class="theme-item" data-theme="ocean" onclick="selectLandingTheme('ocean')">
+                        <div class="theme-swatch" style="background:linear-gradient(135deg,#0c4a6e,#06b6d4)"></div>
+                        <span>Ocean</span>
+                      </div>
+                      <div class="theme-item" data-theme="crimson" onclick="selectLandingTheme('crimson')">
+                        <div class="theme-swatch" style="background:linear-gradient(135deg,#7f1d1d,#f59e0b)"></div>
+                        <span>Crimson</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Hero Section -->
+                  <div class="builder-group">
+                    <div class="builder-group-title"><span>🦸</span> Hero Banner</div>
+                    <div class="form-group">
+                      <label class="mlabel">Badge Label</label>
+                      <input type="text" id="lp-badge" placeholder="e.g. Admissions 2026">
+                    </div>
+                    <div class="form-group">
+                      <label class="mlabel">Main Headline</label>
+                      <input type="text" id="lp-hero-headline" placeholder="Headline...">
+                    </div>
+                    <div class="form-group">
+                      <label class="mlabel">Subtext</label>
+                      <textarea id="lp-hero-subtext" rows="2" placeholder="Subtext..."></textarea>
+                    </div>
+                    <div class="form-group">
+                      <label class="mlabel">CTA Label</label>
+                      <input type="text" id="lp-cta-label" placeholder="Button text...">
+                    </div>
+                  </div>
+
+                  <!-- Stats Section -->
+                  <div class="builder-group">
+                    <div class="builder-group-title"><span>📊</span> Key Statistics</div>
+                    <div style="display:grid; grid-template-columns:1fr 1.5fr; gap:0.5rem; margin-bottom:1rem">
+                      <input type="text" id="lp-s1v" placeholder="Value">
+                      <input type="text" id="lp-s1l" placeholder="Label">
+                    </div>
+                    <div style="display:grid; grid-template-columns:1fr 1.5fr; gap:0.5rem; margin-bottom:1rem">
+                      <input type="text" id="lp-s2v" placeholder="Value">
+                      <input type="text" id="lp-s2l" placeholder="Label">
+                    </div>
+                    <div style="display:grid; grid-template-columns:1fr 1.5fr; gap:0.5rem">
+                      <input type="text" id="lp-s3v" placeholder="Value">
+                      <input type="text" id="lp-s3l" placeholder="Label">
+                    </div>
+                  </div>
+
+                  <!-- Program Icons -->
+                  <div class="builder-group">
+                    <div class="builder-group-title"><span>🎓</span> Academic Programs</div>
+                    <div style="margin-bottom:1rem; border-bottom:1px solid #f1f5f9; padding-bottom:1rem">
+                      <input type="text" id="lp-p1i" placeholder="Icon (emoji)" style="width:50px; margin-right:8px">
+                      <input type="text" id="lp-p1t" placeholder="Title">
+                    </div>
+                    <div style="margin-bottom:1rem; border-bottom:1px solid #f1f5f9; padding-bottom:1rem">
+                      <input type="text" id="lp-p2i" placeholder="Icon" style="width:50px; margin-right:8px">
+                      <input type="text" id="lp-p2t" placeholder="Title">
+                    </div>
+                    <div>
+                      <input type="text" id="lp-p3i" placeholder="Icon" style="width:50px; margin-right:8px">
+                      <input type="text" id="lp-p3t" placeholder="Title">
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+              <!-- Right: Preview Stage -->
+              <div class="builder-preview">
+                <div class="preview-toolbar">
+                  <div class="device-toggle-group">
+                    <button class="device-btn active" id="dev-desktop" onclick="setPreviewSize('desktop')">💻 Desktop</button>
+                    <button class="device-btn" id="dev-tablet" onclick="setPreviewSize('tablet')"> tablets Tablet</button>
+                    <button class="device-btn" id="dev-mobile" onclick="setPreviewSize('mobile')">📱 Mobile</button>
+                  </div>
+                  
+                  <div style="display:flex; gap:0.75rem">
+                    <button class="btn-secondary" onclick="document.getElementById('landing-preview-iframe').contentWindow.location.reload()" style="padding:0.4rem 0.8rem">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px"><path d="M23 4v6h-6"></path><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
+                    </button>
+                    <button class="btn-primary" onclick="saveLandingSettings()" style="padding:0.4rem 1.25rem; font-size:0.85rem">
+                      Save & Publish
+                    </button>
+                  </div>
+                </div>
+
+                <div class="preview-frame-wrap" id="preview-stage">
+                  <div class="device-frame frame-desktop" id="preview-frame-container">
+                    <iframe src="landing.html" id="landing-preview-iframe" onload="syncLandingPreview()"></iframe>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB: DATA MANAGEMENT -->
+          <div id="stab-data" class="settings-tab-content hidden">
+            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem;">
+              <!-- General Settings -->
+              <div class="card" style="padding:1.5rem">
+                <h3 style="margin-bottom:1rem; border-bottom:1px solid var(--outline-variant); padding-bottom:0.5rem">General Configuration</h3>
+                <div class="form-group" style="margin-bottom:1rem">
+                  <label>School Name</label>
+                  <input type="text" id="setting-school-name" placeholder="EduNexus Global Academy">
+                </div>
+                <div class="form-group" style="margin-bottom:1rem">
+                  <label>Academic Year</label>
+                  <input type="text" id="setting-academic-year" placeholder="2026-2027">
+                </div>
+                <button class="btn-primary" onclick="saveGeneralSettings()">Save Configuration</button>
+              </div>
+
+              <!-- Data Management -->
+              <div class="card" style="padding:1.5rem">
+                <h3 style="margin-bottom:1rem; border-bottom:1px solid var(--outline-variant); padding-bottom:0.5rem">Data Management</h3>
+                
+                <div style="margin-bottom:2rem">
+                  <h4 style="font-size:0.95rem; margin-bottom:0.5rem">Export Database</h4>
+                  <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:1rem">Download a complete backup of all students, teachers, and records as a JSON file.</p>
+                  <button class="btn-primary" onclick="exportDatabase()" style="background:var(--primary); color:white">
+                    ⬇ Download Backup (.json)
+                  </button>
+                </div>
+
+                <div>
+                  <h4 style="font-size:0.95rem; margin-bottom:0.5rem">Restore Database</h4>
+                  <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:1rem">Upload a previously exported JSON backup to restore the system.</p>
+                  
+                  <div style="display:flex; gap:1.5rem; margin-bottom:1rem; font-size:0.85rem">
+                    <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer">
+                      <input type="radio" name="restore-mode" value="merge" checked> 
+                      <span>Merge (Updates & Additions)</span>
+                    </label>
+                    <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer">
+                      <input type="radio" name="restore-mode" value="overwrite"> 
+                      <span style="color:#b91c1c; font-weight:600">Strict Overwrite</span>
+                    </label>
+                  </div>
+
+                  <input type="file" id="import-file" accept=".json" style="display:none" onchange="handleFileSelect(event)">
+                  <button class="btn-secondary" onclick="document.getElementById('import-file').click()" style="border: 1px dashed var(--outline); background:transparent; display:inline-flex; align-items:center; gap:0.5rem">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                    Select File to Import
+                  </button>
+                  <div id="import-file-name" style="font-size:0.8rem; margin-top:0.5rem; color:var(--primary); font-weight:600;"></div>
+                  
+                  <div style="margin-top:1rem">
+                    <button class="btn-primary" id="btn-import-confirm" onclick="importDatabase()" disabled style="opacity:0.5; cursor:not-allowed">Execute Restore</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Danger Zone -->
+              <div class="card" style="padding:1.5rem; border:1px solid #fecaca; background:#fffcfc">
+                <h3 style="margin-bottom:1rem; color:#b91c1c; border-bottom:1px solid #fecaca; padding-bottom:0.5rem">Danger Zone</h3>
+                <p style="font-size:0.85rem; color:#7f1d1d; margin-bottom:1.5rem">
+                  Executing a factory reset will permanently erase all local data from this browser. This action cannot be reversed unless you have a recently exported JSON backup.
+                </p>
+                <button class="btn-primary" onclick="factoryReset()" style="background:#dc2626; color:white; border:none">
+                  ⚠ Factory Reset System
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ─────────── REPORT CARDS ─────────── -->
+        <section id="section-reportcards" class="section">
+          <div class="section-header">
+            <div>
+              <h2>Report Cards</h2>
+              <p class="section-sub">Generate and print official student progress reports.</p>
+            </div>
+            <div class="section-actions">
+              <select id="rc-class" onchange="loadReportCardList()" style="min-width:130px">
+                <option value="10">Class 10</option>
+                <option value="9">Class 9</option>
+                <option value="11">Class 11</option>
+                <option value="12">Class 12</option>
+              </select>
+              <select id="rc-exam" onchange="loadReportCardList()" style="min-width:130px">
+                <option value="Mid-Term">Mid-Term</option>
+                <option value="Final">Final Exam</option>
+                <option value="Unit 1">Unit Test 1</option>
+                <option value="Unit 2">Unit Test 2</option>
+              </select>
+            </div>
+          </div>
+
+          <div id="rc-list" style="display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:1.5rem; margin-top:1.5rem"></div>
+        </section>
+
+        <!-- ─────────── LIBRARY ─────────── -->
+        <section id="section-library" class="section">
+          <div class="section-header">
+            <div>
+              <h2>School Library</h2>
+              <p class="section-sub">Search and manage book inventory</p>
+            </div>
+            <div class="section-actions" id="library-admin-actions">
+              <button class="btn-primary" onclick="openAddBookModal()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path><line x1="12" y1="6" x2="12" y2="12"></line><line x1="9" y1="9" x2="15" y2="9"></line></svg>
+                <span>Add Book</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="stats-row" style="margin-bottom:2rem">
+            <div class="stat-card">
+              <div class="stat-icon" style="background:rgba(99,102,241,0.1); color:var(--primary)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+              </div>
+              <div>
+                <h4 id="lib-stat-total">0</h4>
+                <p>Total Books</p>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon" style="background:rgba(16,185,129,0.1); color:var(--success)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><polyline points="16 11 18 13 22 9"></polyline></svg>
+              </div>
+              <div>
+                <h4 id="lib-stat-issued">0</h4>
+                <p>Currently Issued</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" style="margin-bottom:1.5rem; padding:1.25rem">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem">
+              <div class="search-box" style="margin:0; flex:1; max-width:400px">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <input type="text" id="library-search" placeholder="Search title, author or ISBN..." onkeyup="filterLibrary()">
+              </div>
+              <div class="tab-pills" id="library-tabs">
+                <button class="tab-pill active" onclick="switchLibTab('all')">All Books</button>
+                <button class="tab-pill" data-roles="admin,librarian" onclick="switchLibTab('issued')">Borrowed Log</button>
+                <button class="tab-pill" data-roles="student,teacher" onclick="switchLibTab('my')">My Books</button>
+              </div>
+            </div>
+          </div>
+
+          <div id="library-grid" class="library-grid">
+            <!-- Books injected here -->
+          </div>
+        </section>
+
+
+
+      </main>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════ MODALS ═══════════════════════════ -->
+
+  <!-- Student Modal -->
+  <div id="modal-student" class="modal-overlay hidden">
+    <div class="modal glass-card modal-premium">
+
+      <!-- Gradient Header -->
+      <div class="modal-grad-header">
+        <div style="display:flex;align-items:center;gap:1.1rem">
+          <div class="modal-header-icon">🎓</div>
+          <div>
+            <h3 id="modal-student-title" style="font-size:1.2rem;font-weight:800;margin:0">Add New Student</h3>
+            <p style="opacity:0.7;font-size:0.78rem;margin:0">Fill in the student's complete profile</p>
+          </div>
+        </div>
+        <button class="modal-close-pill" onclick="closeModal('modal-student')">&times;</button>
+      </div>
+
+      <form id="form-student" onsubmit="saveStudent(event)" novalidate>
+        <div style="display:grid;grid-template-columns:210px 1fr">
+
+          <!-- LEFT: Live Preview Panel -->
+          <div class="modal-preview-panel">
+            <div id="s-preview-avatar" class="preview-avatar">?</div>
+            <div style="text-align:center;width:100%">
+              <div id="s-preview-name" style="font-weight:800;font-size:1rem;color:var(--primary);margin-bottom:3px">New Student</div>
+              <div id="s-preview-roll" style="font-size:0.75rem;color:var(--text-muted)">Roll: —</div>
+            </div>
+            <div id="s-preview-class" class="preview-badge">Class —</div>
+            <div style="width:100%;margin-top:auto;padding-top:1rem;border-top:1px solid #e2e8f0;text-align:center">
+              <div id="s-preview-gender" style="font-size:0.72rem;color:var(--text-muted);margin-bottom:4px">👤 —</div>
+              <div id="s-preview-blood" style="font-size:0.72rem;color:var(--text-muted)">🩸 —</div>
+            </div>
+          </div>
+
+          <!-- RIGHT: Grouped Form Fields -->
+          <div style="padding:1.75rem;overflow-y:auto;max-height:520px">
+
+            <!-- Personal Info -->
+            <div class="form-section-divider"><span class="fsd-icon">🧍</span> Personal Information</div>
+            <div class="form-grid fsg">
+              <div class="form-group">
+                <label class="mlabel">📛 First Name <span class="req-dot">*</span></label>
+                <input type="text" id="s-fname" placeholder="First name" required oninput="updateStudentPreview()" />
+              </div>
+              <div class="form-group">
+                <label class="mlabel">📛 Last Name <span class="req-dot">*</span></label>
+                <input type="text" id="s-lname" placeholder="Last name" required oninput="updateStudentPreview()" />
+              </div>
+              <div class="form-group">
+                <label class="mlabel">🎂 Date of Birth</label>
+                <input type="date" id="s-dob" />
+              </div>
+              <div class="form-group">
+                <label class="mlabel">⚥ Gender</label>
+                <select id="s-gender" onchange="updateStudentPreview()">
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="mlabel">🩸 Blood Group</label>
+                <select id="s-blood" onchange="updateStudentPreview()">
+                  <option value="A+">A+</option><option value="A-">A-</option>
+                  <option value="B+">B+</option><option value="B-">B-</option>
+                  <option value="O+">O+</option><option value="O-">O-</option>
+                  <option value="AB+">AB+</option><option value="AB-">AB-</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Academic Info -->
+            <div class="form-section-divider"><span class="fsd-icon">📚</span> Academic Details</div>
+            <div class="form-grid fsg">
+              <div class="form-group">
+                <label class="mlabel">🔖 Roll Number <span class="req-dot">*</span></label>
+                <input type="text" id="s-roll" placeholder="e.g. 9A-01" required oninput="updateStudentPreview()" />
+              </div>
+              <div class="form-group">
+                <label class="mlabel">🏫 Class <span class="req-dot">*</span></label>
+                <select id="s-class" required onchange="updateStudentPreview()">
+                  <option value="">Select class</option>
+                  <option value="9">Class 9</option>
+                  <option value="10">Class 10</option>
+                  <option value="11">Class 11</option>
+                  <option value="12">Class 12</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="mlabel">🔡 Section</label>
+                <select id="s-section" onchange="updateStudentPreview()">
+                  <option value="A">Section A</option>
+                  <option value="B">Section B</option>
+                  <option value="C">Section C</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Parent & Contact -->
+            <div class="form-section-divider"><span class="fsd-icon">👪</span> Parent &amp; Contact</div>
+            <div class="form-grid fsg">
+              <div class="form-group">
+                <label class="mlabel">📱 Parent Contact</label>
+                <input type="tel" id="s-contact" placeholder="+91 98765 43210" />
+              </div>
+              <div class="form-group">
+                <label class="mlabel">📧 Student Email</label>
+                <input type="email" id="s-email" placeholder="student@school.edu" />
+              </div>
+              <div class="form-group form-full">
+                <label class="mlabel">📍 Home Address</label>
+                <input type="text" id="s-address" placeholder="Full home address" />
+              </div>
+              <div class="form-group form-full">
+                <label class="mlabel">📬 Parent Email <small style="font-weight:400;color:var(--text-muted)">(for parent login)</small></label>
+                <input type="email" id="s-parent-email" placeholder="parent@email.com" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <input type="hidden" id="s-id" />
+        <div class="modal-foot-bar">
+          <span class="modal-hint"><span class="req-dot">●</span> Required fields</span>
+          <div style="display:flex;gap:0.75rem">
+            <button type="button" class="btn-secondary" onclick="closeModal('modal-student')">Cancel</button>
+            <button type="submit" class="btn-primary">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+              <span>Save Student Profile</span>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+  <!-- Teacher Modal -->
+  <div id="modal-teacher" class="modal-overlay hidden">
+    <div class="modal glass-card modal-premium" style="max-width:680px">
+
+      <!-- Gradient Header with Live Avatar -->
+      <div class="modal-grad-header">
+        <div style="display:flex;align-items:center;gap:1.1rem">
+          <div id="t-preview-avatar" class="modal-header-icon" style="font-size:1.4rem;font-weight:800">👩‍🏫</div>
+          <div>
+            <h3 id="modal-teacher-title" style="font-size:1.2rem;font-weight:800;margin:0">Add New Teacher</h3>
+            <div id="t-preview-empid" style="opacity:0.7;font-size:0.78rem">Employee ID will be assigned</div>
+          </div>
+        </div>
+        <button class="modal-close-pill" onclick="closeModal('modal-teacher')">&times;</button>
+      </div>
+
+      <form id="form-teacher" onsubmit="saveTeacher(event)" novalidate style="padding:1.75rem;max-height:580px;overflow-y:auto">
+
+        <!-- Professional Details -->
+        <div class="form-section-divider"><span class="fsd-icon">👔</span> Professional Details</div>
+        <div class="form-grid fsg">
+          <div class="form-group">
+            <label class="mlabel">📛 First Name <span class="req-dot">*</span></label>
+            <input type="text" id="t-fname" placeholder="First name" required oninput="updateTeacherPreview()" />
+          </div>
+          <div class="form-group">
+            <label class="mlabel">📛 Last Name <span class="req-dot">*</span></label>
+            <input type="text" id="t-lname" placeholder="Last name" required oninput="updateTeacherPreview()" />
+          </div>
+          <div class="form-group">
+            <label class="mlabel">🪪 Employee ID <span class="req-dot">*</span></label>
+            <input type="text" id="t-empid" placeholder="e.g. TCH-001" required oninput="updateTeacherPreview()" />
+          </div>
+          <div class="form-group">
+            <label class="mlabel">📖 Subject <span class="req-dot">*</span></label>
+            <select id="t-subject" required>
+              <option value="">Select subject</option>
+              <option value="Mathematics">Mathematics</option>
+              <option value="Physics">Physics</option>
+              <option value="Chemistry">Chemistry</option>
+              <option value="Biology">Biology</option>
+              <option value="English">English</option>
+              <option value="History">History</option>
+              <option value="Geography">Geography</option>
+              <option value="Computer Science">Computer Science</option>
+              <option value="Physical Education">Physical Education</option>
+            </select>
+          </div>
+          <div class="form-group form-full">
+            <label class="mlabel">🎓 Qualification</label>
+            <input type="text" id="t-qual" placeholder="e.g. M.Sc. Mathematics, B.Ed." />
+          </div>
+        </div>
+
+        <!-- Contact & Compensation -->
+        <div class="form-section-divider"><span class="fsd-icon">💼</span> Contact &amp; Compensation</div>
+        <div class="form-grid fsg">
+          <div class="form-group">
+            <label class="mlabel">📧 Email <span class="req-dot">*</span></label>
+            <input type="email" id="t-email" placeholder="teacher@school.edu" required />
+          </div>
+          <div class="form-group">
+            <label class="mlabel">📱 Phone</label>
+            <input type="tel" id="t-phone" placeholder="+91 98765 43210" />
+          </div>
+          <div class="form-group">
+            <label class="mlabel">⏳ Experience (years)</label>
+            <input type="number" id="t-exp" placeholder="5" min="0" max="50" />
+          </div>
+          <div class="form-group">
+            <label class="mlabel">💰 Salary (₹)</label>
+            <input type="number" id="t-salary" placeholder="45000" />
+          </div>
+        </div>
+
+        <!-- Class Assignment Pills -->
+        <div class="form-section-divider"><span class="fsd-icon">📋</span> Assigned Classes</div>
+        <div style="display:flex;gap:0.6rem;flex-wrap:wrap;margin-bottom:1.5rem">
+          <label class="class-pill"><input type="checkbox" value="9" onchange="updateTeacherClasses()"><span>Class 9</span></label>
+          <label class="class-pill"><input type="checkbox" value="10" onchange="updateTeacherClasses()"><span>Class 10</span></label>
+          <label class="class-pill"><input type="checkbox" value="11" onchange="updateTeacherClasses()"><span>Class 11</span></label>
+          <label class="class-pill"><input type="checkbox" value="12" onchange="updateTeacherClasses()"><span>Class 12</span></label>
+          <label class="class-pill"><input type="checkbox" value="All" onchange="updateTeacherClasses()"><span>All Classes</span></label>
+        </div>
+        <input type="hidden" id="t-classes" />
+        <input type="hidden" id="t-id" />
+      </form>
+
+      <div class="modal-foot-bar">
+        <span class="modal-hint"><span class="req-dot">●</span> Required fields</span>
+        <div style="display:flex;gap:0.75rem">
+          <button type="button" class="btn-secondary" onclick="closeModal('modal-teacher')">Cancel</button>
+          <button type="button" class="btn-primary" onclick="document.getElementById('form-teacher').requestSubmit()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+            <span>Save Teacher Profile</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- Announcement Modal -->
+  <div id="modal-announcement" class="modal-overlay hidden">
+    <div class="modal glass-card modal-premium" style="max-width:560px">
+
+      <!-- Gradient Header -->
+      <div class="modal-grad-header">
+        <div style="display:flex;align-items:center;gap:1.1rem">
+          <div class="modal-header-icon">📢</div>
+          <div>
+            <h3 style="font-size:1.2rem;font-weight:800;margin:0">New Announcement</h3>
+            <p style="opacity:0.7;font-size:0.78rem;margin:0">Broadcast a message to all users</p>
+          </div>
+        </div>
+        <button class="modal-close-pill" onclick="closeModal('modal-announcement')">&times;</button>
+      </div>
+
+      <form id="form-announcement" onsubmit="saveAnnouncement(event)" novalidate style="padding:1.75rem">
+
+        <!-- Category Pills -->
+        <div style="margin-bottom:1.5rem">
+          <label class="mlabel" style="display:block;margin-bottom:0.65rem">🏷️ Category</label>
+          <div style="display:flex;gap:0.5rem;flex-wrap:wrap">
+            <button type="button" class="ann-cat-pill active" data-cat="General"   onclick="selectAnnCat(this)">📋 General</button>
+            <button type="button" class="ann-cat-pill"        data-cat="Academic"  onclick="selectAnnCat(this)">📘 Academic</button>
+            <button type="button" class="ann-cat-pill"        data-cat="Event"     onclick="selectAnnCat(this)">🎉 Event</button>
+            <button type="button" class="ann-cat-pill"        data-cat="Holiday"   onclick="selectAnnCat(this)">🏖️ Holiday</button>
+            <button type="button" class="ann-cat-pill"        data-cat="Alert"     onclick="selectAnnCat(this)">🚨 Alert</button>
+          </div>
+          <select id="ann-category" class="hidden"><option value="General">General</option><option value="Academic">Academic</option><option value="Event">Event</option><option value="Holiday">Holiday</option><option value="Alert">Alert</option></select>
+        </div>
+
+        <!-- Priority Toggle Pills -->
+        <div style="margin-bottom:1.5rem">
+          <label class="mlabel" style="display:block;margin-bottom:0.65rem">🔔 Priority Level</label>
+          <div style="display:flex;gap:0.75rem">
+            <label class="priority-pill" id="ppill-normal">
+              <input type="radio" name="priority-vis" value="normal" checked onchange="selectAnnPriority('normal')">
+              <span class="pil-dot" style="background:#10b981"></span><span>Normal</span>
+            </label>
+            <label class="priority-pill" id="ppill-high">
+              <input type="radio" name="priority-vis" value="high" onchange="selectAnnPriority('high')">
+              <span class="pil-dot" style="background:#f59e0b"></span><span>High</span>
+            </label>
+            <label class="priority-pill" id="ppill-urgent">
+              <input type="radio" name="priority-vis" value="urgent" onchange="selectAnnPriority('urgent')">
+              <span class="pil-dot" style="background:#ef4444"></span><span>Urgent ⚠️</span>
+            </label>
+          </div>
+          <select id="ann-priority" class="hidden"><option value="normal">Normal</option><option value="high">High</option><option value="urgent">Urgent</option></select>
+        </div>
+
+        <!-- Title -->
+        <div class="form-group" style="margin-bottom:1.25rem">
+          <label class="mlabel">📝 Title <span class="req-dot">*</span></label>
+          <input type="text" id="ann-title" placeholder="e.g. School Sports Day 2026" required />
+        </div>
+
+        <!-- Message with character counter -->
+        <div class="form-group" style="margin-bottom:0">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem">
+            <label class="mlabel" style="margin:0">💬 Message <span class="req-dot">*</span></label>
+            <span id="ann-char-count" style="font-size:0.72rem;color:var(--text-muted);font-weight:600">0 / 500</span>
+          </div>
+          <textarea id="ann-message" rows="4" placeholder="Write your announcement details here…" required oninput="updateAnnCharCount(this)" style="resize:none"></textarea>
+        </div>
+
+        <div class="modal-foot-bar" style="margin-top:1.5rem">
+          <span class="modal-hint"><span class="req-dot">●</span> Required fields</span>
+          <div style="display:flex;gap:0.75rem">
+            <button type="button" class="btn-secondary" onclick="closeModal('modal-announcement')">Cancel</button>
+            <button type="submit" class="btn-primary">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+              <span>Post Announcement</span>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+  <!-- Fee Receipt Modal -->
+  <div id="modal-receipt" class="modal-overlay hidden">
+    <div class="modal glass-card receipt-modal">
+      <div class="modal-header">
+        <h3>Fee Receipt</h3>
+        <button class="modal-close" onclick="closeModal('modal-receipt')">&times;</button>
+      </div>
+      <div id="receipt-content" class="receipt-content"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn-secondary" onclick="closeModal('modal-receipt')">Close</button>
+        <button type="button" class="btn-primary" onclick="printReceipt()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;margin-right:6px"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+          Print Receipt
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast hidden">
+    <div class="toast-icon"></div>
+    <span id="toast-msg"></span>
+  </div>
+
+  <!-- Overlay backdrop for sidebar on mobile -->
+  <div id="sidebar-overlay" class="sidebar-overlay hidden" onclick="closeSidebar()"></div>
+
+  <!-- ─── CHANGE PASSWORD MODAL ─── -->
+  <div id="modal-change-password" class="modal-overlay hidden">
+    <div class="modal glass-card" style="max-width:420px">
+      <div class="modal-header">
+        <h3>🔒 Change Password</h3>
+        <button class="modal-close" onclick="closeModal('modal-change-password')">&times;</button>
+      </div>
+      <div style="padding:1.5rem">
+        <div class="form-group" style="margin-bottom:1.25rem">
+          <label>Current Password</label>
+          <input type="password" id="cp-current" placeholder="Enter current password" style="width:100%">
+        </div>
+        <div class="form-group" style="margin-bottom:1.25rem">
+          <label>New Password</label>
+          <input type="password" id="cp-new" placeholder="At least 6 characters" style="width:100%">
+        </div>
+        <div class="form-group" style="margin-bottom:1.5rem">
+          <label>Confirm New Password</label>
+          <input type="password" id="cp-confirm" placeholder="Repeat new password" style="width:100%">
+        </div>
+        <div id="cp-error" class="hidden" style="color:var(--danger);font-size:0.85rem;margin-bottom:1rem;padding:0.75rem;background:#fee2e2;border-radius:8px"></div>
+        <div style="display:flex;gap:1rem;justify-content:flex-end">
+          <button class="btn-secondary" onclick="closeModal('modal-change-password')">Cancel</button>
+          <button class="btn-primary" onclick="savePassword()">Update Password</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── REPORT CARD VIEW MODAL ─── -->
+  <div id="modal-report-card" class="modal-overlay hidden">
+    <div class="modal glass-card" style="max-width:700px;padding:0">
+      <div class="modal-header" style="padding:1.5rem 2rem;border-bottom:1px solid var(--border-light)">
+        <h3>Student Report Card</h3>
+        <div style="display:flex;gap:0.75rem">
+          <button class="btn-secondary" style="padding:0.5rem 1rem;font-size:0.85rem" onclick="printReportCard()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;margin-right:4px"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+            Print
+          </button>
+          <button class="modal-close" onclick="closeModal('modal-report-card')">&times;</button>
+        </div>
+      </div>
+      <div id="report-card-body" style="padding:2.5rem 2rem;overflow-y:auto;max-height:80vh">
+        <!-- Dynamically injected -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ─────────── MODAL: MANAGE SUBJECTS ─────────── -->
+  <div id="modal-manage-subjects" class="modal-overlay hidden">
+    <div class="modal glass-card modal-premium" style="max-width:500px; padding:0; overflow:hidden">
+      <div class="modal-grad-header">
+        <div style="display:flex;align-items:center;gap:1.1rem">
+          <div class="modal-header-icon">📑</div>
+          <div>
+            <h3 style="font-size:1.2rem;font-weight:800;margin:0">Manage Subjects</h3>
+            <p style="opacity:0.7;font-size:0.78rem;margin:0">Add or remove curriculum subjects</p>
+          </div>
+        </div>
+        <button class="modal-close-pill" onclick="closeModal('modal-manage-subjects')">&times;</button>
+      </div>
+      <div style="padding:1.75rem">
+        <label class="mlabel">➕ Add New Subject</label>
+        <div style="display:flex; gap:0.5rem; margin-bottom:1.5rem">
+          <input type="text" id="new-subject-name" placeholder="Enter subject name (e.g. Physics)" style="flex:1" onkeyup="if(event.key==='Enter') addSubject()">
+          <button class="btn-primary" onclick="addSubject()">Add</button>
+        </div>
+        <label class="mlabel">📚 Existing Subjects</label>
+        <div id="subject-manager-list" class="subject-tag-container" style="min-height:100px; padding:1rem; background:var(--bg-light); border-radius:12px; border:1px solid var(--border-light)">
+          <!-- Subjects will be rendered here -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─────────── MODAL: ADD/EDIT BOOK ─────────── -->
+  <div id="modal-book" class="modal-overlay hidden">
+    <div class="modal glass-card modal-premium" style="max-width:550px">
+      <div class="modal-grad-header">
+        <div style="display:flex;align-items:center;gap:1.1rem">
+          <div class="modal-header-icon">📚</div>
+          <div>
+            <h3 id="modal-book-title" style="font-size:1.2rem;font-weight:800;margin:0">Add New Book</h3>
+            <p style="opacity:0.7;font-size:0.78rem;margin:0">Update library inventory</p>
+          </div>
+        </div>
+        <button class="modal-close-pill" onclick="closeModal('modal-book')">&times;</button>
+      </div>
+
+      <form id="form-book" onsubmit="saveBook(event)" style="padding:1.75rem">
+        <div class="form-grid">
+          <div class="form-group" style="grid-column:1/-1">
+            <label class="mlabel">📖 Book Title</label>
+            <input type="text" id="b-title" placeholder="e.g. Modern Architecture" required />
+          </div>
+          <div class="form-group">
+            <label class="mlabel">👤 Author</label>
+            <input type="text" id="b-author" placeholder="Author name" required />
+          </div>
+          <div class="form-group">
+            <label class="mlabel">🏷️ Category</label>
+            <select id="b-category">
+              <option value="Fiction">Fiction</option>
+              <option value="Science">Science</option>
+              <option value="History">History</option>
+              <option value="Computer Science">Computer Science</option>
+              <option value="Biography">Biography</option>
+              <option value="Mathematics">Mathematics</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="mlabel">🔢 Total Copies</label>
+            <input type="number" id="b-total" min="1" value="1" required />
+          </div>
+          <div class="form-group">
+            <label class="mlabel">🔖 ISBN</label>
+            <input type="text" id="b-isbn" placeholder="ISBN-13" />
+          </div>
+        </div>
+        <input type="hidden" id="b-id" />
+        
+        <div class="modal-foot-bar" style="margin-top:1.5rem; border-top:1px solid #e2e8f0; padding-top:1.5rem; display:flex; justify-content:flex-end; gap:0.75rem">
+          <button type="button" class="btn-secondary" onclick="closeModal('modal-book')">Cancel</button>
+          <button type="submit" class="btn-primary">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+            <span>Save Book Details</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ─────────── MODAL: ISSUE BOOK ─────────── -->
+  <div id="modal-issue-book" class="modal-overlay hidden">
+    <div class="modal glass-card modal-premium" style="max-width:450px">
+      <div class="modal-grad-header">
+        <div style="display:flex;align-items:center;gap:1.1rem">
+          <div class="modal-header-icon">🤝</div>
+          <div>
+            <h3 style="font-size:1.2rem;font-weight:800;margin:0">Issue Book</h3>
+            <p id="issue-book-name" style="opacity:0.9;font-size:0.78rem;margin:0">Assigning book to user</p>
+          </div>
+        </div>
+        <button class="modal-close-pill" onclick="closeModal('modal-issue-book')">&times;</button>
+      </div>
+
+      <form id="form-issue" onsubmit="issueBook(event)" style="padding:1.75rem">
+        <div class="form-group" style="margin-bottom:1.25rem">
+          <label class="mlabel">👤 Select User (Student/Teacher)</label>
+          <select id="issue-user-id" required>
+            <!-- Injected -->
+          </select>
+        </div>
+        <div class="form-group" style="margin-bottom:1.5rem">
+          <label class="mlabel">📅 Due Date</label>
+          <input type="date" id="issue-due-date" required />
+        </div>
+        <input type="hidden" id="issue-book-id" />
+        
+        <div class="modal-foot-bar" style="display:flex; justify-content:flex-end; gap:0.75rem">
+          <button type="button" class="btn-secondary" onclick="closeModal('modal-issue-book')">Cancel</button>
+          <button type="submit" class="btn-primary" style="background:var(--success)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="18" y1="8" x2="23" y2="13"></line><line x1="23" y1="8" x2="18" y2="13"></line></svg>
+            <span>Issue Now</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+
+  </body>
+</html>
